@@ -1,0 +1,42 @@
+<div *ngIf="vehicle">
+    <main>
+    <div class="container col-xxl-8 px-4 py-5">
+        <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+          <div class="col-10 col-sm-8 col-lg-6">
+            <figure>
+                <div *ngIf="vehicle.photo; else elseBlock">
+                    <p>temporario ate foto nao ser uma string</p>
+                    <!--
+                    <img src={{vehicle.photo}} alt="photo of {{vehicle.model}} {{vehicle.make}} class="d-block mx-lg-auto img-fluid" loading="lazy"">
+                    -->
+                  </div>
+                  <ng-template #elseBlock>
+                    <img id="defaultImage" src="/assets/truck.svg" alt="icon of a truck" class="d-block mx-lg-auto img-fluid" loading="lazy">
+                  </ng-template>
+                </figure>
+          </div>
+          <div class="col-lg-6">
+            <h1 class="fw-light">Vehicle details:</h1>
+            <div class="text-muted">
+            <p>Model: {{vehicle.model}}</p>
+            <p>Make: {{vehicle.make}}</p>
+            <p>Year: {{vehicle.year}}</p>
+            <p>Avg. Consumption: {{vehicle.consumption}} liter per km</p>
+          </div>
+        </div> 
+        
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+              <button type="button" class="btn btn-outline-secondary btn-sm px-4" (click)="tripCost()">Simulate trip cost</button>
+              <button type="button" class="btn btn-outline-secondary btn-sm px-4" (click)="updateVehicle()">Update vehicle information</button>
+              <button type="button"  class="btn btn-outline-secondary btn-sm px-4" (click)="delete()">Delete vehicle</button>
+            </div> 
+
+
+            <router-outlet></router-outlet>
+       
+        </div>
+      </div>
+      
+    </main>
+  
+  </div>

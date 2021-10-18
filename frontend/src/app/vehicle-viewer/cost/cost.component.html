@@ -1,0 +1,14 @@
+<div class="text-muted">
+<p *ngIf="!isValid">Fuel cost and distance must be positive numbers.</p>
+<p *ngIf="cost" >The cost of the trip is estimated to be {{cost}} €.</p>
+</div>
+<form #numbers="ngForm" (ngSubmit)="validateInput(numbers.value)"> 
+    <p>Fuel price in € :    
+    <input type="number" name="fuel" placeholder="0.0" ngModel> 
+    </p>
+    <p>Distance in km :    
+        <input type="number" name="distance" placeholder="0.0" ngModel> 
+    </p>
+    <input type="submit" class="btn btn-outline-secondary btn-sm px-4" value="Submit"> 
+ </form>
+

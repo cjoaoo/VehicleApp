@@ -1,0 +1,6 @@
+<div *ngIf="deleteClicked">
+    <p>Are you sure you want to delete this vehicle?</p>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+    <button class="btn btn-outline-secondary btn-sm px-4" type="button" (click)="deleteVehicle()" >Yes</button>
+    <button class="btn btn-outline-secondary btn-sm px-4" type="button" (click)="clickDelete()">No</button>
+</div>  

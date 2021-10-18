@@ -1,0 +1,44 @@
+
+
+<main class="container centered">
+
+
+    <section class="py-5 text-center container">
+        <div class="row py-lg-5">
+            <div class="col-lg-6 col-md-8 mx-auto">
+                <h1 class="fw-light">Our vehicles</h1>
+                <p class="lead text-muted">Feel free to add your own.</p>
+                <p></p>
+            </div>
+        </div>
+    </section>
+
+    <div class="album py-5 bg-light">
+        <div class="container">
+
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                <div class="col" *ngFor="let vehicle of vehicles">
+                    <div class="card shadow-sm">
+                        <figure>
+                        <div *ngIf="vehicle.photo; else elseBlock">
+                            <p>temporario ate foto nao ser uma string</p>
+                            
+                            <img class="thumbnail" src={{vehicle.photo}} alt="photo of {{vehicle.model}} {{vehicle.make}}">
+                            
+                          </div>
+                          <ng-template #elseBlock>
+                            <img id="defaultImage" class="thumbnail" src="/assets/truck.svg" alt="icon of a truck">
+                          </ng-template>
+                        </figure>
+                        <div class="card-body centered">
+                            <p class="card-text fw">{{vehicle.make}} {{vehicle.model}}  {{vehicle.year}}</p>
+                                <button type="button" (click)="viewVehicle(vehicle.id)" class="btn btn-sm btn-outline-secondary">View</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+
+</main>
