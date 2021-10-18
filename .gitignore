@@ -1,0 +1,6 @@
+
+#backend:
+backend/vehicle/target/
+
+#frontend:
+frontend/node_modules/

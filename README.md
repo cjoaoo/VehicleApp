@@ -60,6 +60,7 @@ cd backend/vehicle
 #### To run frontend:
 ```
 cd frontend
+npm install
 npm start
 ```
 VehicleApp is ready to use in the browser at `http://localhost:4200/`.
