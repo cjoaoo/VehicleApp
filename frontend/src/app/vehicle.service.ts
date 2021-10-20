@@ -35,12 +35,12 @@ export class VehicleService {
     .set('make', make)
     .set('year', year)
     .set('consumption', consumption);
+
     return this.http.post<Number>(this.endpoint, this.httpOptions, {params: params});
   }
 
   updateVehicle(id: number, make: string, model: string, year: number, consumption: number){
     let params = new HttpParams()
-    .set('id', id)
     .set('model', model)
     .set('make', make)
     .set('year', year)

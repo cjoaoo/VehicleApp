@@ -14,55 +14,38 @@ export class UploadVehicleComponent implements OnInit {
   validInput: boolean = true;
 
   constructor(private vehicleService: VehicleService,
-              private nav: NavigateService,
-              private activatedRoute: ActivatedRoute) {
+              private nav: NavigateService) {
                }
 
   ngOnInit(): void {
   }
   
   validateInput(form: any){
-    if(form.model && form.make && form.year && form.consumption && !isNaN(form.year) && 
-    parseInt(form.year) === Number(form.year) && Number(form.year) > 0 && !isNaN(form.consumption) && Number(form.consumption) > 0){
+    if(form.model && form.make && form.year && form.consumption  && 
+    parseInt(form.year) === form.year && form.year > 0 && form.consumption > 0){
       this.validInput = true;
-      const id = this.nav.getId(this.activatedRoute)
-      if( id === -1){ // there is no id in the route = post request
-        this.postVehicle(form);
-      }else{
-        this.updateVehicle(id, form);
-      }
-
-
+      this.postVehicle(form);
       
     }else{
       this.validInput = false;
-      console.log(this.validInput);
     }
   }
 
 
   postVehicle(form: any){
     this.vehicleService.postVehicle(form.make, form.model, form.year, form.consumption).subscribe(
-      (res: Number)=>{
-       this.nav.navigateToDashboard();
+      (res: any)=>{
+        if(isNaN(res)){
+          this.nav.navigateToDashboard();
+        }else{
+          this.nav.navigateToVehicle(res);
+        }
+       
       },
       (err:any)=>{
         console.log(err);
       }
     )
   }
-
-  updateVehicle(id: number, form: any){
-    this.vehicleService.updateVehicle(id, form.make, form.model, form.year, form.consumption).subscribe(
-      (res: Number)=>{
-        this.nav.navigateToDashboard();
-      },
-      (err:any)=>{
-        console.log(err);
-        this.nav.navigateToPageNotFound();
-      }
-    )
-  }
-  
 
 }

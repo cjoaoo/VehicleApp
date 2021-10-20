@@ -12,6 +12,9 @@ import { TopNavBarComponent } from './top-nav-bar/top-nav-bar.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { FormsModule } from '@angular/forms';
 import { DeleteComponent } from './vehicle-viewer/delete/delete.component';
+import { ImageDisplayComponent } from './image-display/image-display.component';
+import { UpdateComponent } from './vehicle-viewer/update/update.component';
+import { UploadImageComponent } from './vehicle-viewer/upload-image/upload-image.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +26,10 @@ import { DeleteComponent } from './vehicle-viewer/delete/delete.component';
     UploadVehicleComponent,
     TopNavBarComponent,
     PageNotFoundComponent,
-    DeleteComponent
+    DeleteComponent,
+    ImageDisplayComponent,
+    UpdateComponent,
+    UploadImageComponent
   ],
   imports: [
     BrowserModule,

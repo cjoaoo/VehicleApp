@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -30,8 +31,8 @@ public class Vehicle {
 	@Column(nullable = false)
 	double consumption; //average litre consumption per km
 	
-	@OneToOne(fetch=FetchType.EAGER , cascade=CascadeType.ALL , orphanRemoval=true)
-	@JoinColumn(name="ImageId")
+	//@OneToMany(cascade=CascadeType.ALL) @JoinColumn(name="vehicle_id", nullable=false)
+	@OneToOne(cascade=CascadeType.ALL, orphanRemoval=true)
 	private Image photo;
 	
 	// constructors
@@ -100,8 +101,13 @@ public class Vehicle {
 	}
 	
 	// method
+	
+	public boolean hasPhoto() {
+		return photo != null;
+	}
+	
 	public VehicleDTO toDto() {
-		return new VehicleDTO(id, model, make, year, photo);
+		return new VehicleDTO(id, model, make, year);
 	}
 
 }

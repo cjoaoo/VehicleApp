@@ -10,8 +10,6 @@ import { VehicleService } from 'src/app/vehicle.service';
 })
 export class DeleteComponent implements OnInit {
 
-  deleteClicked: boolean = true;
-  
   constructor(private vehicleService: VehicleService,
               private nav: NavigateService,
               private activatedRoute: ActivatedRoute) { }
@@ -19,14 +17,14 @@ export class DeleteComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  clickDelete(){
-    this.deleteClicked = !this.deleteClicked;
+  clickNo(){
+    this.nav.navigateToVehicle(this.nav.getId(this.activatedRoute));
   }
 
   deleteVehicle(){
     const id = this.nav.getId(this.activatedRoute);
     this.vehicleService.deleteVehicle(id).subscribe(
-      (res:any)=>{
+      ()=>{
         this.nav.navigateToDashboard();
       }
     );

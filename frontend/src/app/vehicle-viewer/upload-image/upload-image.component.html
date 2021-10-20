@@ -1,0 +1,8 @@
+<form #vf="ngForm" (ngSubmit)="submit()">
+    <p>Upload a picture: </p>
+    <input type="file" (change)="fileChangeEvent($event)" >
+    <div >
+        <input id="submit" type="submit" class="btn btn-outline-secondary btn-sm px-4" value="Submit">
+    </div>
+</form>
+    

@@ -1,6 +1,5 @@
-<main class="container centered">
-<h1 class="fw-light">Vehicle details:</h1>
 <div class="text-muted">
+    <p class="fw-light">{{instructions}}</p>
     <form #vf="ngForm" (ngSubmit)="validateInput(vf.value)">
         <p>Model :
             <input type="text" name="model" placeholder="Model" ngModel>
@@ -12,10 +11,9 @@
             <input type="number" name="year" placeholder="yyyy" ngModel>
         </p>
         <p>Avg. consumtion per km :
-            <input type="number" name="consumption" placeholder="0.0" ngModel>
+            <input type="number" no-float name="consumption" placeholder="0.0" ngModel>
         </p>
-        <p *ngIf="!validInput">Please insert a valid model, make, year and consumption.</p>
         <input type="submit" class="btn btn-outline-secondary btn-sm px-4" value="Submit">
     </form>
+        
 </div>
-</main>

@@ -1,5 +1,6 @@
 package vehicle.app;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,9 +14,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import vehicle.app.exceptions.NotFoundException;
@@ -29,13 +32,26 @@ public class VehicleController {
 	private VehicleService vehicleService;
 	private final String endpoint = "/api/vehicles";
 	
+	// http methods
+	
+	/**
+	 * @param make
+	 * @param model
+	 * @param year
+	 * @param consumption
+	 * @return
+	 */
 	@PostMapping(endpoint)
 	public int addVehicle(
 			@RequestParam("make") String make, @RequestParam("model") String model, 
 			@RequestParam("year") int year, @RequestParam("consumption") double consumption) {
 		return vehicleService.addVehicle(make, model, year, consumption);
+		
 	}
 	
+	/**
+	 * @return
+	 */
 	@GetMapping(endpoint)
 	public List<VehicleDTO> getAllVehicles(){
 		List<VehicleDTO> vehicles = new ArrayList<>();
@@ -43,11 +59,13 @@ public class VehicleController {
 		for(Vehicle v : res) {
 			vehicles.add(v.toDto());
 		}
-	//	VehicleDTO v = new VehicleDTO(10,"fake vehicle", "fake model", 0000, null);
-	//	vehicles.add(v);
 		return vehicles;	
 	}
 	
+	/**
+	 * @param id
+	 * @return
+	 */
 	@GetMapping(endpoint + "/{id}")
 	public Vehicle getVehicle(@PathVariable int id){
 		try {
@@ -57,9 +75,16 @@ public class VehicleController {
 		}
 	}
 	
-	@CrossOrigin(origins = "http://localhost:4200")
+	/**
+	 * @param id
+	 * @param make
+	 * @param model
+	 * @param year
+	 * @param consumption
+	 * @return
+	 */
 	@PutMapping(endpoint + "/{id}")
-	public int updateVehicle( @PathVariable int id, @RequestParam("make") String make, @RequestParam("model") String model, 
+	public int updateVehicle(@PathVariable int id, @RequestParam("make") String make, @RequestParam("model") String model, 
 			@RequestParam("year") int year, @RequestParam("consumption") double consumption){
 		try {
 			return vehicleService.updateVehicle(id, make, model, year, consumption);
@@ -69,6 +94,9 @@ public class VehicleController {
 		
 	}
 	
+	/**
+	 * @param id
+	 */
 	@DeleteMapping(endpoint + "/{id}")
 	public void deleteVehicle(@PathVariable int id) {
 		try {
@@ -80,6 +108,12 @@ public class VehicleController {
 	
 	}
 	
+	/**
+	 * @param id
+	 * @param fuelCost
+	 * @param distance
+	 * @return
+	 */
 	@GetMapping(endpoint + "/{id}/cost")
 	public double simulateTripCost
 		(@PathVariable int id, @RequestParam("fuelCost") double fuelCost, @RequestParam("distance") double distance){
@@ -90,6 +124,53 @@ public class VehicleController {
 			}
 	}
 	
+	/**
+	 * @param vehicleId
+	 * @param name
+	 * @param file
+	 * @return
+	 */
+	@CrossOrigin(origins = "http://localhost:4200")
+	@PutMapping(endpoint + "/{vehicleId}/img")	
+	public void uploadImage(@PathVariable int vehicleId, @RequestParam("imageFile") MultipartFile file) {
+		try {
+			Image img = new Image(file.getBytes());
+			vehicleService.updateImage(vehicleId, img);
+		} catch (IOException e) {
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+		} catch (NotFoundException e) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+		}
+	}
+	
+	/**
+	 * @param id
+	 */
+	
+	@DeleteMapping(endpoint + "/{vehicleId}/img")
+	public void removeImage(@PathVariable int vehicleId) {
+		try {
+			vehicleService.removeImage(vehicleId);
+		} catch (NotFoundException e) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+		}
+	}
+	
+	/**
+	 * @param id
+	 * @return
+	 */
+	@GetMapping(endpoint + "/{vehicleId}/img")
+	public Image getImage(@PathVariable int vehicleId){
+
+		try {
+			return vehicleService.getVehicleImage(vehicleId);
+		} catch (NotFoundException e) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+		}
+
+
+	}
 	
 	
 

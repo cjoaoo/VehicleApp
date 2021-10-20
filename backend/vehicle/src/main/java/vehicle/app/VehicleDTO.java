@@ -16,16 +16,14 @@ public class VehicleDTO implements Serializable{
 	String make;
 	String model;
 	int year;
-	Image photo;
 
 
 	// constructor
-	public VehicleDTO(int id, String make, String model, int year, Image photo) {
+	public VehicleDTO(int id, String make, String model, int year) {
 		this.id = id;
 		this.make = make;
 		this.model = model;
 		this.year = year;
-		this.photo = photo;
 	}
 
 
@@ -51,10 +49,6 @@ public class VehicleDTO implements Serializable{
 
 	public int getYear() {
 		return year;
-	}
-	
-	public Image getPhoto() {
-		return photo;
 	}
 
 }

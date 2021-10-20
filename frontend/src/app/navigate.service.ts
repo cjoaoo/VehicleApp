@@ -6,7 +6,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class NavigateService {
 
-  constructor(private router : Router) { }
+  constructor(private router : Router,
+              private activatedRoute: ActivatedRoute) { }
 
   navigateToDashboard(){
     this.router.navigate(["/vehicles"]);
@@ -19,17 +20,22 @@ export class NavigateService {
   navigateToPageNotFound(){
     this.router.navigate(["/page-not-found"]);
   }
-/*
+
   navigateToVehicle(id: number){
     this.router.navigate(["/vehicles/" + id]);
   }
-*/
+
+  refresh(){
+    window.location.reload();
+  }
+
   isValidId(id: any) : boolean{
    return id && !isNaN(parseInt(id));
   }
+  
 
-  getId(activatedRoute: ActivatedRoute): number{
-    const id = activatedRoute.snapshot.paramMap.get('id');
+  getId(actRoute: ActivatedRoute): number{
+    const id = actRoute.snapshot.paramMap.get('id');
     if (id && !isNaN(parseInt(id))){
       return parseInt(id);
     }else{

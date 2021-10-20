@@ -19,21 +19,7 @@
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                 <div class="col" *ngFor="let vehicle of vehicles">
                     <div class="card shadow-sm">
-                        <figure>
-                        <div *ngIf="vehicle.photo; else elseBlock">
-                            <p>temporario ate foto nao ser uma string</p>
-                            
-                            <img class="thumbnail" src={{vehicle.photo}} alt="photo of {{vehicle.model}} {{vehicle.make}}">
-                            
-                          </div>
-                          <ng-template #elseBlock>
-                            <img id="defaultImage" class="thumbnail" src="/assets/truck.svg" alt="icon of a truck">
-                          </ng-template>
-                        </figure>
-                        <div class="card-body centered">
-                            <p class="card-text fw">{{vehicle.make}} {{vehicle.model}}  {{vehicle.year}}</p>
-                                <button type="button" (click)="viewVehicle(vehicle.id)" class="btn btn-sm btn-outline-secondary">View</button>
-                        </div>
+                        <button type="button" (click)="viewVehicle(vehicle.id)" class="btn btn-outline-secondary btn-sm px-4">{{vehicle.make}} {{vehicle.model}}  {{vehicle.year}}</button>
                     </div>
                 </div>
             </div>

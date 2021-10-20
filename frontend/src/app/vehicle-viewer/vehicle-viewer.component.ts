@@ -51,4 +51,8 @@ export class VehicleViewerComponent implements OnInit {
     this.router.navigate(['edit/'+this.vehicle?.id], {relativeTo: this.activatedRoute});
   }
 
+  uploadPicture(){
+    this.router.navigate(['imgupload/'+this.vehicle?.id], {relativeTo: this.activatedRoute});
+  }
+
 }

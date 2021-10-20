@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 import { Vehicle } from '../vehicle';
 import { VehicleService } from '../vehicle.service';
@@ -15,13 +14,13 @@ export class VehiclesComponent implements OnInit {
   vehicles : Vehicle[] = [];
 
   constructor(private vehicleService: VehicleService, 
-                      private activatedRoute : ActivatedRoute,
                       private router: Router ) 
                       { }
 
   ngOnInit(): void {
     this.vehicleService.getAllVehicles().subscribe(
-      (data => this.vehicles = data));
+      (data: any) => {this.vehicles = data},
+      (err: any) => {console.log(err)});
       
   }
 
