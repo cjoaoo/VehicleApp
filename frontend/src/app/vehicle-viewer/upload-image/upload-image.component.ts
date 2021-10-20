@@ -33,7 +33,6 @@ export class UploadImageComponent implements OnInit {
             },
             (err:any)=>{console.log(err)};
         };
-        //reader.readAsDataURL(fileInput.target.files[0]);
     }
 }
 
