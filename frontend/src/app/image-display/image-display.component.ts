@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { Image } from '../image';
+import { Photo } from '../photo';
 import { ImageServiceService } from '../image-service.service';
 import { NavigateService } from '../navigate.service';
 
@@ -12,7 +12,7 @@ import { NavigateService } from '../navigate.service';
 })
 export class ImageDisplayComponent implements OnInit {
 
-  vehicleImg?: any;
+  vehicleImg?: Photo;
   hasImage: boolean = false;
 
   constructor(private nav: NavigateService,
@@ -20,29 +20,23 @@ export class ImageDisplayComponent implements OnInit {
               private imgService: ImageServiceService,
               private sanitizer: DomSanitizer) { }
 
-  ngOnInit(): void {
-    const vehicleId = this.nav.getId(this.activatedRoute);
-    if(vehicleId > 0){
-      this.imgService.getPicture(vehicleId)
-        .subscribe(
-          (image: Image) =>{        
-            this.displayImage(image);
-          },
-          ()=>{
-            this.nav.navigateToPageNotFound();
-          }
-       )
-    }
+ngOnInit(): void {
+  
+  const vehicleId = this.nav.getId(this.activatedRoute);
+  if(vehicleId > 0){
+    this.imgService.getPicture(vehicleId)
+      .subscribe(
+        (image: Photo) =>{  
+          this.vehicleImg = image;   
+          this.vehicleImg.src = this.sanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,' + this.vehicleImg.src);
+          this.hasImage = true;
+        },
+        ()=>{
+          console.log("This vehicle has no image.");
+          this.hasImage= false;
+        }
+     )
   }
-
-  displayImage(image: any){
-    if(image){
-      const objectURL = 'data:image/jpeg;base64,' + image.img;
-      this.vehicleImg = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-      this.hasImage = true;
-    }else{
-      this.hasImage= false;
-    } 
-  }
+}
 
 }

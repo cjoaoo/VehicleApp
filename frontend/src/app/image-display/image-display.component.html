@@ -1,6 +1,6 @@
 <figure>
     <div *ngIf="vehicleImg; else elseBlock">
-        <img [src] = vehicleImg class="d-block mx-lg-auto img-fluid"> 
+        <img [src] = vehicleImg.src class="d-block mx-lg-auto img-fluid" alt={{vehicleImg.name}}> 
       </div>
       <ng-template #elseBlock>
         <img id="defaultImage" src="/assets/truck.svg" alt="icon of a truck" class="d-block mx-lg-auto img-fluid" loading="lazy">

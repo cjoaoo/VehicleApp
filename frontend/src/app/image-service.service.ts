@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Image } from './image';
+import { Photo } from './photo';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,7 @@ export class ImageServiceService {
   constructor(private http: HttpClient) { }
 
   getPicture(vehicleId: number){
-    return this.http.get<Image>(this.endpoint + vehicleId + "/img", this.httpOptions);
+    return this.http.get<Photo>(this.endpoint + vehicleId + "/img", this.httpOptions);
   }
 
   putPicture(vehicleId: number, img: any){
