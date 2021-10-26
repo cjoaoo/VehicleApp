@@ -1,4 +1,4 @@
-package vehicle.app;
+package vehicle.app.data;
 
 import org.springframework.data.repository.CrudRepository;
 

@@ -1,4 +1,4 @@
-package vehicle.app;
+package vehicle.app.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,7 +21,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import vehicle.app.data.Image;
+import vehicle.app.data.Vehicle;
 import vehicle.app.exceptions.NotFoundException;
+import vehicle.app.facade.ImageDTO;
+import vehicle.app.facade.VehicleDTO;
+import vehicle.app.service.VehicleService;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -161,10 +166,16 @@ public class VehicleController {
 	 * @return
 	 */
 	@GetMapping(endpoint + "/{vehicleId}/img")
-	public Image getImage(@PathVariable int vehicleId){
+	public ImageDTO getImage(@PathVariable int vehicleId){
 
 		try {
-			return vehicleService.getVehicleImage(vehicleId);
+			Image img = vehicleService.getVehicleImage(vehicleId);
+			if(img == null) {
+				throw new NotFoundException("This vehicle has no image.");
+			}			
+			
+			return img.toDTO();
+			//return img;
 		} catch (NotFoundException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
 		}

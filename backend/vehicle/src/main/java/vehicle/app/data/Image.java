@@ -1,18 +1,29 @@
-package vehicle.app;
+package vehicle.app.data;
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import vehicle.app.facade.ImageDTO;
+
+import javax.persistence.ForeignKey;
 
 @Entity
+@Table(name = "image", uniqueConstraints = {@UniqueConstraint(columnNames = {"id"})})
 public class Image {
 	
 	// attributes
-	
+
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
 	int id;
 	
@@ -22,9 +33,12 @@ public class Image {
 	@Column (nullable = false, length = 1000)
 	private byte[] img;
 	
-	//@OneToOne
-    //@JoinColumn(name = "vehicle_id")
-	//private Vehicle vehicle;
+	// @JoinColumn(name = "vehicle_id" is the name of the column
+	// foreignKey = @ForeignKey(name = "FK_vehicle_image") is the name of the constraint
+	
+	@OneToOne(fetch=FetchType.LAZY) @JoinColumn(name = "vehicle_id", nullable = false, foreignKey = @ForeignKey(name = "FK_vehicle_image"))
+	@JsonIgnoreProperties("photo")
+	private Vehicle vehicle;
 	
 	
 	// constructors
@@ -56,13 +70,17 @@ public class Image {
 	public byte[] getImg() {
 		return img;
 	}
-	/*
+	
 	public Vehicle getVehicle() {
 		return vehicle;
 	}
-*/
+
 	// setters
 
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -70,11 +88,15 @@ public class Image {
 	public void setImg(byte[] img) {
 		this.img = img;
 	}
-	/*
+	
 	public void setVehicle(Vehicle vehicle) {
 		this.vehicle = vehicle;
 	}
-	*/
+	
+	
+	public ImageDTO toDTO() {
+		return new ImageDTO(id, name, img);
+	}
 	
 
 	

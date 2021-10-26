@@ -1,4 +1,4 @@
-package vehicle.app;
+package vehicle.app.data;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -7,11 +7,16 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import vehicle.app.facade.VehicleDTO;
 
 @Entity
+@Table(name = "vehicle", uniqueConstraints = {@UniqueConstraint(columnNames = {"id"})})
 public class Vehicle {
 	
 	//attributes
@@ -31,8 +36,9 @@ public class Vehicle {
 	@Column(nullable = false)
 	double consumption; //average litre consumption per km
 	
-	//@OneToMany(cascade=CascadeType.ALL) @JoinColumn(name="vehicle_id", nullable=false)
-	@OneToOne(cascade=CascadeType.ALL, orphanRemoval=true)
+	//
+	@OneToOne(cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY, mappedBy="vehicle")
+	@JsonIgnoreProperties("vehicle")
 	private Image photo;
 	
 	// constructors

@@ -1,4 +1,4 @@
-package vehicle.app;
+package vehicle.app.facade;
 
 import java.io.Serializable;
 

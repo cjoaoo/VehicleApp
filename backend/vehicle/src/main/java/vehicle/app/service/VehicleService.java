@@ -1,4 +1,4 @@
-package vehicle.app;
+package vehicle.app.service;
 
 
 import java.util.Optional;
@@ -6,6 +6,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import vehicle.app.data.Image;
+import vehicle.app.data.Vehicle;
+import vehicle.app.data.VehicleRepository;
 import vehicle.app.exceptions.NotFoundException;
 
 @Service
@@ -44,7 +47,7 @@ public class VehicleService {
 	 * @throws NotFoundException
 	 */
 	public Vehicle getVehicle(int id) throws NotFoundException {
-		return get(id);
+		return getVehicleAux(id);
 	}
 
 	/**
@@ -57,7 +60,7 @@ public class VehicleService {
 	 * @throws NotFoundException
 	 */
 	public int updateVehicle(int id, String make, String model, int year, double consumption) throws NotFoundException {
-		Vehicle v = get(id);
+		Vehicle v = getVehicleAux(id);
 		if(!make.isEmpty()) {
 			v.setMake(make);
 		}
@@ -80,7 +83,7 @@ public class VehicleService {
 	 * @throws NotFoundException
 	 */
 	public void deleteVehicle(int id) throws NotFoundException {
-		vehicleRepository.delete(get(id));
+		vehicleRepository.delete(getVehicleAux(id));
 	}
 	
 	/**
@@ -91,7 +94,7 @@ public class VehicleService {
 	 * @throws NotFoundException
 	 */
 	public double simulateTripCost(int id, double fuelCost, double distance) throws NotFoundException {
-		return get(id).getConsumption() * fuelCost * distance;
+		return getVehicleAux(id).getConsumption() * fuelCost * distance;
 	}
 	
 	/**
@@ -100,9 +103,9 @@ public class VehicleService {
 	 * @throws NotFoundException 
 	 */
 	public void updateImage(int id, Image img) throws NotFoundException {
-		Vehicle v = get(id);
+		Vehicle v = getVehicleAux(id);
 		img.setName(v.getMake() + " " + v.getModel());
-		//img.setVehicle(v);
+		img.setVehicle(v);
 		v.setPhoto(img);
 		vehicleRepository.save(v);
 	}
@@ -113,11 +116,12 @@ public class VehicleService {
 	 * @throws NotFoundException 
 	 */
 	public Image getVehicleImage(int vehicleId) throws NotFoundException {
-		return get(vehicleId).getPhoto();
+		Vehicle v = getVehicleAux(vehicleId);
+		return v.hasPhoto() ? v.getPhoto() : null;
 	}
 	
 	public void removeImage(int vehicleId) throws NotFoundException {
-		Vehicle v = get(vehicleId);
+		Vehicle v = getVehicleAux(vehicleId);
 		v.setPhoto(null);
 		vehicleRepository.save(v);
 	}
@@ -130,7 +134,7 @@ public class VehicleService {
 	 * @return
 	 * @throws NotFoundException
 	 */
-	private Vehicle get(int id) throws NotFoundException {
+	private Vehicle getVehicleAux(int id) throws NotFoundException {
 		Optional<Vehicle> v = vehicleRepository.findById(id);
 		if(v.isPresent()) {
 			return v.get();
