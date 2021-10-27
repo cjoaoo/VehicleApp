@@ -3,7 +3,7 @@ CRUD web application to manage vehicles.
 
 ### Technologies:
 - Java + Spring Boot
-- TypeScript (AngularJS)
+- TypeScript + HTML + CSS (AngularJS)
 - MySQL
 - Bootstrap for styling
 
