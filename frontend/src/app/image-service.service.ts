@@ -24,7 +24,7 @@ export class ImageServiceService {
     .set('imageFile', img)
     .set('imageName', 'nome');
     console.log(params);
-    return this.http.put(this.endpoint + vehicleId + "/img", this.httpOptions, {params: params});
+    return this.http.put(this.endpoint + vehicleId + "/img", {params: params}, this.httpOptions);
     
   }
 }

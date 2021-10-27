@@ -18,8 +18,8 @@ const routes: Routes = [
           children: [
             { path: 'cost/:id', component: CostComponent},
             { path: 'delete/:id', component: DeleteComponent},
-            { path: 'edit/:id', component: UpdateComponent},
-            { path: 'imgupload/:id', component: UploadImageComponent}
+            { path: 'edit/:id', component: UpdateComponent} //,
+          //  { path: 'imgupload/:id', component: UploadImageComponent}
           ]},
     { path: 'upload', component: UploadVehicleComponent},
   { path: '**', component: PageNotFoundComponent}
